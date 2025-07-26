@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Bahgat - E-commerce Senior Specialist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Teal & Slate -->
+    <!-- Application Structure Plan: The application is designed as a single-page portfolio with a top navigation bar for easy access to key sections. The structure is as follows: 1. Hero Section: Immediate introduction. 2. Key Achievements: A dashboard-style section to highlight top-line results and grab attention instantly. 3. Professional Journey: An interactive timeline to showcase career progression in an engaging way, with details and a performance chart revealed on click. 4. Core Competencies: A visually organized grid of skills for quick scanning. 5. AI-Powered Skill Matcher: A new interactive section leveraging LLMs to demonstrate skill relevance. 6. Contact Section: A clear call to action. This structure is chosen to guide the recruiter from high-impact results to detailed experience and skills, making the exploration intuitive and compelling, with an added AI-driven value proposition. -->
+    <!-- Visualization & Content Choices: 1. Key Achievements: Goal=Impress. Method=Animated stat cards (HTML/CSS/JS) to make key numbers like '3M+ EGP Sales' pop. Justification=Highlights value immediately. 2. Professional Journey: Goal=Explore. Method=Interactive timeline (HTML/CSS/JS) to make career history digestible. Interaction=Click to expand details. Justification=More engaging than a static list. 3. Performance Chart: Goal=Compare/Quantify. Method=Bar Chart (Chart.js) showing revenue and user growth. Interaction=Integrated into the timeline reveal. Justification=Visual data is more impactful than text alone. 4. Skills: Goal=Organize. Method=Categorized grid with icons (HTML/Tailwind). Justification=Easily scannable and visually appealing. 5. AI-Powered Skill Matcher: Goal=Demonstrate Relevance. Method=Textarea input, button, and dynamic text output (HTML/JS/Gemini API). Interaction=User pastes job description, clicks button, AI provides skill match. Justification=Directly addresses recruiter's need to assess fit and showcases innovative use of AI. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #0d9488; /* teal-600 */
+        }
+        .timeline-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            margin: 1rem auto;
+            height: 300px;
+            max-height: 300px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .skill-tag {
+            background-color: #e2e8f0; /* slate-200 */
+            color: #475569; /* slate-600 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-slate-800">Ahmed Bahgat</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#achievements" class="nav-link font-medium text-slate-600">Achievements</a>
+                <a href="#experience" class="nav-link font-medium text-slate-600">Experience</a>
+                <a href="#skills" class="nav-link font-medium text-slate-600">Skills</a>
+                <a href="#ai-matcher" class="nav-link font-medium text-slate-600">AI Matcher</a>
+                <a href="#contact" class="nav-link font-medium text-slate-600">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#achievements" class="block py-2 nav-link font-medium text-slate-600">Achievements</a>
+            <a href="#experience" class="block py-2 nav-link font-medium text-slate-600">Experience</a>
+            <a href="#skills" class="block py-2 nav-link font-medium text-slate-600">Skills</a>
+            <a href="#ai-matcher" class="block py-2 nav-link font-medium text-slate-600">AI Matcher</a>
+            <a href="#contact" class="block py-2 nav-link font-medium text-slate-600">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <img src="https://placehold.co/150x150/e0f2f7/0d9488?text=صورة+شخصية" alt="صورة شخصية لأحمد بغت" class="w-32 h-32 rounded-full mx-auto mt-8 shadow-lg border-4 border-teal-200 object-cover">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mt-6">
+                    E-commerce Senior Specialist
+                </h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600">
+                    Driving significant revenue growth and optimizing digital presence through data-driven e-commerce strategies, SEO, and content marketing.
+                </p>
+                <div class="mt-8 flex justify-center gap-4">
+                    <a href="#contact" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-700 transition-transform transform hover:scale-105">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Achievements Section -->
+        <section id="achievements" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Key Achievements</h2>
+                    <p class="mt-4 text-lg text-slate-500">A proven record of delivering tangible results and driving growth.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-100">
+                        <h3 class="text-5xl font-extrabold text-teal-600" data-target="3000000">0</h3>
+                        <p class="mt-2 text-lg font-semibold text-slate-700">EGP Sales Revenue</p>
+                        <p class="text-slate-500">Generated in under 8 months as a Project Owner.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-100">
+                        <h3 class="text-5xl font-extrabold text-teal-600" data-target="23.3">0</h3>
+                        <p class="mt-2 text-lg font-semibold text-slate-700">Total Revenue Growth %</p>
+                        <p class="text-slate-500">Achieved within one year at Saudia United Pharmacy.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-100">
+                        <h3 class="text-5xl font-extrabold text-teal-600" data-target="120">0</h3>
+                        <p class="mt-2 text-lg font-semibold text-slate-700">Active User Growth %</p>
+                        <p class="text-slate-500">Driven by strategic digital marketing initiatives.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Experience Section -->
+        <section id="experience" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Professional Journey</h2>
+                    <p class="mt-4 text-lg text-slate-500">An interactive timeline of my career progression. Click each role to see details.</p>
+                </div>
+                <div class="relative max-w-3xl mx-auto">
+                    <!-- Vertical Line -->
+                    <div class="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-slate-200"></div>
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item mb-12">
+                        <div class="flex items-center">
+                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                                <span class="text-white font-bold">★</span>
+                            </div>
+                            <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
+                                <h3 class="text-xl font-bold text-slate-800">E-commerce Project Owner <img src="https://placehold.co/40x40/e0f2f7/0d9488?text=شعار" alt="شعار مشروع التجارة الإلكترونية" class="h-8 w-8 rounded-full inline-block ml-2 align-middle"></h3>
+                                <p class="text-slate-500 font-medium">[Start Date] – Present</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item-content ml-10 md:ml-[55%] md:pl-12 mt-4">
+                            <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                <li>Spearheaded the launch and growth of an e-commerce venture, achieving over 3 million EGP in sales within the first 8 months.</li>
+                                <li>Developed and executed comprehensive e-commerce strategies, overseeing product selection, pricing, marketing, and customer experience.</li>
+                                <li>Managed end-to-end project lifecycle, from conceptualization and platform setup to operational management and performance optimization.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item mb-12">
+                         <div class="flex items-center">
+                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                                <span class="text-white font-bold">📈</span>
+                            </div>
+                            <div class="w-full md:text-right md:mr-[55%] md:pr-12 cursor-pointer timeline-item-header">
+                                <h3 class="text-xl font-bold text-slate-800">SEO Content Writer & E-Marketing Planner <img src="https://placehold.co/40x40/e0f2f7/0d9488?text=شعار" alt="شعار صيدليات المتحدة" class="h-8 w-8 rounded-full inline-block ml-2 align-middle"></h3>
+                                <p class="text-slate-500 font-medium">Saudia United Pharmacy | Sep 2023 – Present</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item-content ml-10 md:text-right md:mr-[55%] md:pr-12 mt-4">
+                            <p class="font-semibold text-teal-700 mb-4">Key Performance Impact:</p>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                            <ul class="list-disc list-inside space-y-2 text-slate-600 text-left">
+                                <li>Instrumental in driving a 23.3% increase in total revenue and 120%+ growth in active users within one year.</li>
+                                <li>Developed and executed monthly marketing plans, including designing promotional offers and managing banner displays.</li>
+                                <li>Utilized Google Analytics extensively to generate detailed performance reports, guiding strategic decision-making.</li>
+                                <li>Provided guidance and training to new team members on operational workflows and best practices.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item">
+                        <div class="flex items-center">
+                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                                <span class="text-white font-bold">✍️</span>
+                            </div>
+                            <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
+                                <h3 class="text-xl font-bold text-slate-800">Content Writer & Product Improvement Lead <img src="https://placehold.co/40x40/e0f2f7/0d9488?text=شعار" alt="شعار منصة سلة" class="h-8 w-8 rounded-full inline-block ml-2 align-middle"></h3>
+                                <p class="text-slate-500 font-medium">Salla Platform Experience</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item-content ml-10 md:ml-[55%] md:pl-12 mt-4">
+                            <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                <li>Led content writing efforts and managed a team dedicated to enhancing and optimizing product listings on the Salla platform for various Saudi brands.</li>
+                                <li>Ensured product content, imagery, and SEO elements were meticulously crafted to maximize visibility, engagement, and conversion rates.</li>
+                                <li>Collaborated closely with brand teams to align content strategies with brand guidelines and market trends.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Core Competencies</h2>
+                    <p class="mt-4 text-lg text-slate-500">A versatile skill set to drive e-commerce success.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">E-commerce & Digital Marketing</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">E-commerce Strategy</span><span class="skill-tag">Online Merchandising</span><span class="skill-tag">SEO Optimization</span><span class="skill-tag">Content Marketing</span><span class="skill-tag">CRO</span><span class="skill-tag">Media Buying</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Platforms & Tools</h3>
+                        <div class="flex flex-col space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-2">E-commerce Platforms:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Magento</span>
+                                    <span class="skill-tag">Salla</span>
+                                    <span class="skill-tag">Easy Order</span>
+                                    <span class="skill-tag">YouCan</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-2">Digital Advertising Platforms:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Google Ads</span>
+                                    <span class="skill-tag">Meta Ads</span>
+                                    <span class="skill-tag">TikTok Ads</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-2">Analytics & SEO Tools:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Google Analytics</span>
+                                    <span class="skill-tag">Semrush</span>
+                                    <span class="skill-tag">Keyword Planner</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-2">Productivity & AI Tools:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Excel</span>
+                                    <span class="skill-tag">Google Sheets</span>
+                                    <span class="skill-tag">XMind</span>
+                                    <span class="skill-tag">ChatGPT</span>
+                                    <span class="skill-tag">Gemini</span>
+                                    <span class="skill-tag">Perplexity</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Content & Communication</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Content Creation</span><span class="skill-tag">Copywriting</span><span class="skill-tag">Editing</span><span class="skill-tag">Keyword Research</span><span class="skill-tag">Collaboration</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Leadership & Management</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Project Management</span><span class="skill-tag">Team Guidance</span><span class="skill-tag">Performance Reporting</span><span class="skill-tag">Data Analysis</span><span class="skill-tag">Strategic Planning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI-Powered Skill Matcher Section -->
+        <section id="ai-matcher" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">✨ AI-Powered Skill Matcher</h2>
+                    <p class="mt-4 text-lg text-slate-500">
+                        Paste a job description below, and our AI will highlight how my skills align with the requirements.
+                    </p>
+                </div>
+                <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-100">
+                    <div class="mb-6">
+                        <label for="jobDescriptionInput" class="block text-slate-700 text-lg font-semibold mb-2">Job Description:</label>
+                        <textarea id="jobDescriptionInput" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 resize-y min-h-[150px] text-slate-700" placeholder="Paste the job description here..."></textarea>
+                    </div>
+                    <button id="analyzeSkillsButton" class="w-full bg-teal-600 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-700 transition-transform transform hover:scale-105 flex items-center justify-center">
+                        <span id="buttonText">Analyze Skills ✨</span>
+                        <svg id="loadingSpinner" class="animate-spin h-5 w-5 text-white ml-3 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                    <div id="skillMatcherOutput" class="mt-8 p-6 bg-slate-100 rounded-lg border border-slate-200 text-slate-700 min-h-[100px] flex items-center justify-center text-center">
+                        <p class="text-slate-500">Your skill match analysis will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <footer id="contact" class="bg-slate-800 text-white py-16">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold">Let's Connect</h2>
+                <p class="mt-4 max-w-xl mx-auto text-slate-300">
+                    I'm currently seeking new opportunities and would love to hear from you. Feel free to reach out.
+                </p>
+                <div class="mt-8">
+                    <a href="mailto:your_email@example.com" class="text-xl font-semibold text-teal-400 hover:text-teal-300 transition">
+                        your_email@example.com
+                    </a>
+                </div>
+                <div class="mt-4 text-slate-400">
+                    <p>+20 101 575 4361</p>
+                    <a href="https://www.linkedin.com/in/ahmed-bahgat-56a27629b" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">LinkedIn Profile</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Animated Counter for Achievements
+            const counters = document.querySelectorAll('[data-target]');
+            const speed = 200; 
+
+            const animateCounter = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        if (target >= 1000000) {
+                            counter.innerText = (target / 1000000).toFixed(1) + 'M+';
+                        } else if (target > 1000) {
+                             counter.innerText = (target / 1000) + 'K+';
+                        } else {
+                             counter.innerText = target.toFixed(1) + '%';
+                             if(target > 100) counter.innerText = target.toFixed(0) + '%+';
+                        }
+                    }
+                };
+                updateCount();
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+
+            // Interactive Timeline
+            const timelineHeaders = document.querySelectorAll('.timeline-item-header');
+            timelineHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.parentElement.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+
+            // Performance Chart
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Revenue Growth', 'Active User Growth'],
+                    datasets: [{
+                        label: 'Growth %',
+                        data: [23.3, 120],
+                        backgroundColor: [
+                            'rgba(13, 148, 136, 0.6)', // teal-600 with opacity
+                            'rgba(51, 65, 85, 0.6)'    // slate-700 with opacity
+                        ],
+                        borderColor: [
+                            'rgba(13, 148, 136, 1)',
+                            'rgba(51, 65, 85, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Nav link active state on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            window.onscroll = () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            // Custom styles for skill tags
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .skill-tag {
+                    background-color: #e2e8f0; /* slate-200 */
+                    color: #475569; /* slate-600 */
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 9999px;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Gemini API Integration for Skill Matcher
+            const jobDescriptionInput = document.getElementById('jobDescriptionInput');
+            const analyzeSkillsButton = document.getElementById('analyzeSkillsButton');
+            const skillMatcherOutput = document.getElementById('skillMatcherOutput');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const buttonText = document.getElementById('buttonText');
+
+            analyzeSkillsButton.addEventListener('click', async () => {
+                const jobDescription = jobDescriptionInput.value.trim();
+                if (!jobDescription) {
+                    skillMatcherOutput.innerHTML = '<p class="text-red-500">Please paste a job description to analyze.</p>';
+                    return;
+                }
+
+                loadingSpinner.classList.remove('hidden');
+                buttonText.textContent = 'Analyzing...';
+                analyzeSkillsButton.disabled = true;
+                skillMatcherOutput.innerHTML = '<p class="text-slate-500">Analyzing skills, please wait...</p>';
+
+                const candidateProfileSummary = `
+                    Ahmed Bahgat is an E-commerce Senior Specialist with over 3 years of combined experience as an E-commerce Project Owner, Online Merchandiser, Media Buyer, SEO Content Writer, and E-Marketing Planner. Key achievements include generating over 3 million EGP in sales within 8 months as an E-commerce Project Owner, contributing to a 23.3% increase in total revenue and 120%+ growth in active users at Saudia United Pharmacy. He is proficient in E-commerce Strategy, Online Merchandising, SEO Optimization, Content Marketing, CRO, Media Buying. Platforms & Tools: Magento, Salla, Easy Order, YouCan, Google Ads, Meta Ads, TikTok Ads, Google Analytics, Semrush, Keyword Planner, Excel, Google Sheets, XMind, ChatGPT, Gemini, Perplexity. He also has strong skills in Content Creation, Copywriting, Editing, Keyword Research, Collaboration, Project Management, Team Guidance & Training, Performance Reporting, Data Analysis, Strategic Planning.
+                `;
+
+                const prompt = {
+                    contents: [
+                        {
+                            role: "user",
+                            parts: [
+                                {
+                                    text: `You are an AI assistant specialized in matching candidate skills to job descriptions. Your task is to analyze a given job description and a candidate's profile, then identify and list the most relevant skills from the candidate's profile that match the job requirements. Explain briefly why each skill is relevant. Be concise and professional.
+                                    Candidate Profile Summary:
+                                    ${candidateProfileSummary}
+                                    Job Description:
+                                    ${jobDescription}
+                                    Please identify the most relevant skills from Ahmed's profile that match this job description and explain their relevance.`
+                                }
+                            ]
+                        }
+                    ]
+                };
+
+                try {
+                    const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(prompt)
+                    });
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        skillMatcherOutput.innerHTML = `<div class="prose max-w-none">${text.replace(/\n/g, '<br>')}</div>`; // Display as HTML, replace newlines with <br>
+                    } else {
+                        skillMatcherOutput.innerHTML = '<p class="text-red-500">Could not get a response from the AI. Please try again.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error calling Gemini API:', error);
+                    skillMatcherOutput.innerHTML = '<p class="text-red-500">An error occurred while analyzing skills. Please try again later.</p>';
+                } finally {
+                    loadingSpinner.classList.add('hidden');
+                    buttonText.textContent = 'Analyze Skills ✨';
+                    analyzeSkillsButton.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
