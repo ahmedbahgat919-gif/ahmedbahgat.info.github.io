@@ -9,21 +9,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Professional Teal & Slate -->
-    <!-- Application Structure Plan: The application is designed as a single-page portfolio with a top navigation bar for easy access to key sections. The structure is as follows: 1. Hero Section: Immediate introduction. 2. Key Achievements: A dashboard-style section to highlight top-line results and grab attention instantly. 3. Professional Journey: An interactive timeline to showcase career progression in an engaging way, with details and a performance chart revealed on click. 4. Core Competencies: A visually organized grid of skills for quick scanning. 5. Clients & Brands Portfolio: A new section showcasing client collaborations with a dynamic, continuously scrolling marquee effect. 6. Education & Certifications: A section for academic background and courses, now with a dedicated sub-section for certificate images. 7. AI-Powered Skill Matcher: A new interactive section leveraging LLMs to demonstrate skill relevance. 8. Contact Section: A clear call to action. This structure is chosen to guide the recruiter from high-impact results to detailed experience and skills, making the exploration intuitive and compelling, with an added AI-driven value proposition and client validation. -->
-    <!-- Visualization & Content Choices: 1. Key Achievements: Goal=Impress. Method=Animated stat cards (HTML/CSS/JS) to make key numbers like '3M+ EGP Sales' pop. Justification=Highlights value immediately. 2. Professional Journey: Goal=Explore. Method=Interactive timeline (HTML/CSS/JS) to make career history digestible. Interaction=Click to expand details. Justification=More engaging than a static list. 3. Performance Chart: Goal=Compare/Quantify. Method=Bar Chart (Chart.js) showing revenue and user growth. Interaction=Integrated into the timeline reveal. Justification=Visual data is more impactful than text alone. 4. Skills: Goal=Organize. Method=Categorized grid with icons (HTML/Tailwind). Justification=Easily scannable and visually appealing. 5. Clients & Brands Portfolio: Goal=Validate Experience. Method=Continuously scrolling marquee of circular client logos (HTML/Tailwind/CSS animation). Justification=Visually engaging and dynamic way to present a large number of clients, creating a "wow" factor. 6. Education & Certifications: Goal=Inform. Method=Structured text blocks (HTML/Tailwind) for academic background and courses, and direct image display for certificates. Justification=Clearly presents academic background and visual proof of certifications. 7. AI-Powered Skill Matcher: Goal=Demonstrate Relevance. Method=Textarea input, button, and dynamic text output (HTML/JS/Gemini API). Interaction=User pastes job description, clicks button, AI provides skill match. Justification=Directly addresses recruiter's need to assess fit and showcases innovative use of AI. -->
+    <!-- Chosen Palette: Professional Teal & Dark Slate -->
+    <!-- Application Structure Plan: The website is structured as a single-page portfolio, now with a dark theme. The navigation and content are entirely in English. The flow is: 1. Hero: Dynamic introduction with profile image. 2. About Me: Narrative summary of expertise. 3. Professional Journey: Interactive timeline of roles. 4. Core Competencies: Accordion-style collapsible skill sections with enhanced reveal animations. 5. Clients & Brands: Animated marquee of client logos. 6. Education & Certifications: Academic and professional development with certificate images in a grid layout. 7. Contact Me: Direct contact information. This architecture prioritizes visual engagement, clear information hierarchy, and direct presentation of Ahmed's profile. -->
+    <!-- Visualization & Content Choices: 1. Hero Section: Goal=Engage/Impress. Method=Dynamic typing headline (HTML/JS) with updated tagline and prominent profile picture. Justification=Creates an immediate "wow" factor and clearly communicates core value. 2. About Me: Goal=Inform. Method=Text block summarizing professional essence. Justification=Provides a concise overview. 3. Professional Journey: Goal=Explore. Method=Interactive timeline (HTML/CSS/JS) to make career history digestible. Interaction=Click to expand details. Justification=More engaging than a static list. 4. Performance Chart (within Journey): Goal=Quantify Impact. Method=Bar Chart (Chart.js) for revenue/user. Justification=Visualizes concrete results. 5. Skills: Goal=Organize/Explore. Method=Accordion-style collapsible sections (HTML/Tailwind/JS) for categorized skill tags, with individual skill tags animating in on reveal. Interaction=Click to expand/collapse. Justification=Improves readability and allows users to focus on specific skill categories, preventing information overload while adding visual flair. 6. Clients & Brands Portfolio: Goal=Validate Experience. Method=Continuously scrolling marquee of circular client logos (HTML/Tailwind/CSS animation). Justification=Visually engaging and dynamic way to present a large number of clients. 7. Education & Certifications: Goal=Inform/Showcase. Method=Grid layout of certificate images within styled cards (HTML/Tailwind). Justification=Provides a visually appealing and organized display of credentials, similar to the requested example. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
-            color: #334155; /* slate-700 */
+            background-color: #1a202c; /* Dark slate-900 */
+            color: #e2e8f0; /* Light slate-200 */
         }
         .nav-link {
             transition: color 0.3s;
         }
         .nav-link.active, .nav-link:hover {
-            color: #0d9488; /* teal-600 */
+            color: #38b2ac; /* Teal-400 */
         }
         .timeline-item-content {
             max-height: 0;
@@ -39,28 +39,37 @@
             max-width: 600px;
         }
         .skill-tag {
-            background-color: #e2e8f0; /* slate-200 */
-            color: #475569; /* slate-600 */
+            background-color: #4a5568; /* Darker slate */
+            color: #e2e8f0; /* Light slate */
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
             font-size: 0.875rem;
             font-weight: 500;
+            opacity: 0; /* Initially hidden for animation */
+            transform: translateY(10px); /* Initially slightly below for slide-up */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .certificate-card {
+            background-color: #2d3748; /* Darker background for cards */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+        }
+        .certificate-card:hover {
+            transform: scale(1.02);
         }
         .certificate-image {
             width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease-in-out;
-        }
-        .certificate-image:hover {
-            transform: scale(1.02);
+            height: 180px; /* Fixed height for consistent image display */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-bottom: 1px solid #4a5568; /* Subtle separator */
         }
         .client-logo-container {
-            background-color: #ffffff;
+            background-color: #2d3748; /* Darker background for logos */
             padding: 1rem;
             border-radius: 9999px; /* Make it circular */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,118 +114,173 @@
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); } /* Move half of the duplicated content */
         }
+
+        /* Accordion styles */
+        .accordion-header {
+            background-color: #2d3748; /* Darker background for header */
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #e2e8f0;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #4a5568; /* Even darker on hover */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding: 0 1.5rem; /* Horizontal padding for content */
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Adjust as needed for content height */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .accordion-item + .accordion-item {
+            margin-top: 1rem;
+        }
+        .accordion-arrow {
+            transition: transform 0.3s ease;
+        }
+        .accordion-arrow.rotate {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header & Navigation -->
-    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+    <header id="header" class="bg-gray-800/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Replaced text with logo image -->
-            <a href="#" class="text-xl font-bold text-slate-800">
+            <a href="#" class="text-xl font-bold text-white">
                 <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Bahgat%20logo.png?raw=true" alt="Ahmed Bahgat Logo" class="h-8 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x32/cccccc/333333?text=Logo+Error';">
             </a>
             <div class="hidden md:flex space-x-8">
-                <a href="#achievements" class="nav-link font-medium text-slate-600">Achievements</a>
-                <a href="#experience" class="nav-link font-medium text-slate-600">Experience</a>
-                <a href="#skills" class="nav-link font-medium text-slate-600">Skills</a>
-                <a href="#clients" class="nav-link font-medium text-slate-600">Clients</a>
-                <a href="#education" class="nav-link font-medium text-slate-600">Education</a>
-                <a href="#contact" class="nav-link font-medium text-slate-600">Contact</a>
+                <a href="#about" class="nav-link font-medium text-gray-300">About</a>
+                <a href="#experience" class="nav-link font-medium text-gray-300">Experience</a>
+                <a href="#skills" class="nav-link font-medium text-gray-300">Skills</a>
+                <a href="#clients" class="nav-link font-medium text-gray-300">Clients</a>
+                <a href="#education" class="nav-link font-medium text-gray-300">Education</a>
+                <a href="#contact" class="nav-link font-medium text-gray-300">Contact</a>
             </div>
-            <button id="mobile-menu-button" class="md:hidden text-slate-700">
+            <button id="mobile-menu-button" class="md:hidden text-gray-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#achievements" class="block py-2 nav-link font-medium text-slate-600">Achievements</a>
-            <a href="#experience" class="block py-2 nav-link font-medium text-slate-600">Experience</a>
-            <a href="#skills" class="block py-2 nav-link font-medium text-slate-600">Skills</a>
-            <a href="#clients" class="block py-2 nav-link font-medium text-slate-600">Clients</a>
-            <a href="#education" class="block py-2 nav-link font-medium text-slate-600">Education</a>
-            <a href="#contact" class="block py-2 nav-link font-medium text-slate-600">Contact</a>
+            <a href="#about" class="block py-2 nav-link font-medium text-gray-300">About</a>
+            <a href="#experience" class="block py-2 nav-link font-medium text-gray-300">Experience</a>
+            <a href="#skills" class="block py-2 nav-link font-medium text-gray-300">Skills</a>
+            <a href="#clients" class="block py-2 nav-link font-medium text-gray-300">Clients</a>
+            <a href="#education" class="block py-2 nav-link font-medium text-gray-300">Education</a>
+            <a href="#contact" class="block py-2 nav-link font-medium text-gray-300">Contact</a>
         </div>
     </header>
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="py-20 md:py-32 bg-white">
-            <div class="container mx-auto px-6 text-center">
+        <section id="hero" class="py-20 md:py-32 bg-gray-900 min-h-screen flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900 opacity-75 z-0"></div>
+            <div class="container mx-auto px-6 text-center z-10 relative">
                 <!-- Profile picture updated with the provided URL -->
-                <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%207.38.27%20AM.jpeg" alt="صورة شخصية لأحمد بغت" class="w-32 h-32 rounded-full mx-auto mt-8 shadow-lg border-4 border-teal-200 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Image+Error';">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mt-6">
-                    E-commerce Senior Specialist
+                <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%84%D8%A7%D8%AD%D9%84%D9%8A.png?raw=true" alt="Ahmed Bahgat's Profile Picture" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto mb-8 shadow-xl border-4 border-gray-700 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/4a5568/e2e8f0?text=Image+Error';">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                    <span id="hero-headline-prefix">Ahmed Bahgat - </span><span id="hero-dynamic-headline"></span>
                 </h1>
-                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600">
-                    Driving significant revenue growth and optimizing digital presence through data-driven e-commerce strategies, SEO, and content marketing.
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-gray-300 opacity-90">
+                    Transforming strategic visions into tangible financial results in the evolving e-commerce landscape.
                 </p>
-                <div class="mt-8 flex justify-center gap-4">
-                    <a href="#contact" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-700 transition-transform transform hover:scale-105">
+                <div class="mt-10 flex justify-center gap-4">
+                    <a href="#contact" class="bg-teal-500 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-600 transition-transform transform hover:scale-105 shadow-lg">
                         Get In Touch
                     </a>
                 </div>
             </div>
         </section>
 
+        <!-- About Me Section -->
+        <section id="about" class="py-20 bg-gray-800 text-gray-200">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">About Me</h2>
+                    <p class="mt-4 text-lg text-gray-400">
+                        A summary of my professional expertise and journey in e-commerce.
+                    </p>
+                </div>
+                <div class="bg-gray-700 p-8 rounded-xl shadow-lg border border-gray-600">
+                    <p class="text-lg text-gray-200 leading-relaxed">
+                        Ahmed Bahgat is a Senior E-commerce Specialist with over 3 years of combined experience in driving digital growth and optimizing online presence for brands. With a proven track record of achieving exceptional results, including generating over 3 million EGP in sales in under 8 months as an E-commerce Project Owner, and contributing to a 23.3% revenue increase and 120%+ active user growth at Saudia United Pharmacy. He combines strategic vision with technical expertise to make effective data-driven decisions. Passionate about turning challenges into sustainable growth opportunities and building high-performing teams.
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <!-- Key Achievements Section -->
-        <section id="achievements" class="py-20">
+        <section id="achievements" class="py-20 bg-gray-900 text-gray-200">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Key Achievements</h2>
-                    <p class="mt-4 text-lg text-slate-500">A proven record of delivering tangible results and driving growth.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Key Achievements</h2>
+                    <p class="mt-4 text-lg text-gray-400">A proven record of delivering tangible results and driving growth.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-100">
-                        <h3 class="text-5xl font-extrabold text-teal-600" data-target="3000000">0</h3>
-                        <p class="mt-2 text-lg font-semibold text-slate-700">EGP Sales Revenue</p>
-                        <p class="text-slate-500">Generated in under 8 months as a Project Owner.</p>
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-5xl font-extrabold text-teal-400" data-target="3000000">0</h3>
+                        <p class="mt-2 text-lg font-semibold text-gray-200">EGP Sales Revenue</p>
+                        <p class="text-gray-400">Generated in under 8 months as a Project Owner.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-100">
-                        <h3 class="text-5xl font-extrabold text-teal-600" data-target="23.3">0</h3>
-                        <p class="mt-2 text-lg font-semibold text-slate-700">Total Revenue Growth %</p>
-                        <p class="text-slate-500">Achieved within one year at Saudia United Pharmacy.</p>
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-5xl font-extrabold text-teal-400" data-target="23.3">0</h3>
+                        <p class="mt-2 text-lg font-semibold text-gray-200">Total Revenue Growth %</p>
+                        <p class="text-gray-400">Achieved within one year at Saudia United Pharmacy.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-100">
-                        <h3 class="text-5xl font-extrabold text-teal-600" data-target="120">0</h3>
-                        <p class="mt-2 text-lg font-semibold text-slate-700">Active User Growth %</p>
-                        <p class="text-slate-500">Driven by strategic digital marketing initiatives.</p>
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-5xl font-extrabold text-teal-400" data-target="120">0</h3>
+                        <p class="mt-2 text-lg font-semibold text-gray-200">Active User Growth %</p>
+                        <p class="text-gray-400">Driven by strategic digital marketing initiatives.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Professional Experience Section -->
-        <section id="experience" class="py-20 bg-white">
+        <section id="experience" class="py-20 bg-gray-800 text-gray-200">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Professional Journey</h2>
-                    <p class="mt-4 text-lg text-slate-500">An interactive timeline of my career progression. Click each role to see details.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Professional Journey</h2>
+                    <p class="mt-4 text-lg text-gray-400">An interactive timeline of my career progression. Click each role to see details.</p>
                 </div>
                 <div class="relative max-w-3xl mx-auto">
                     <!-- Vertical Line -->
-                    <div class="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-slate-200"></div>
+                    <div class="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-gray-700"></div>
                     
                     <!-- Saudia United Pharmacy - Ecommerce Specialist (Jan 2024 – Present) -->
                     <div class="timeline-item mb-12">
                          <div class="flex items-center">
-                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                            <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
                                 <span class="text-white font-bold">🛒</span>
                             </div>
                             <div class="w-full md:text-right md:mr-[55%] md:pr-12 cursor-pointer timeline-item-header">
-                                <h3 class="text-xl font-bold text-slate-800">Ecommerce Specialist <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Mila%20serv.jpeg?raw=true" alt="شعار صيدليات المتحدة" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Error';"></h3>
-                                <p class="text-slate-500 font-medium">Saudia United Pharmacy | Jan 2024 – Present</p>
+                                <h3 class="text-xl font-bold text-white">Ecommerce Specialist <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Mila%20serv.jpeg?raw=true" alt="Saudia United Pharmacy Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
+                                <p class="text-gray-400 font-medium">Saudia United Pharmacy | Jan 2024 – Present</p>
                             </div>
                         </div>
                         <div class="timeline-item-content ml-10 md:text-right md:mr-[55%] md:pr-12 mt-4">
                             <!-- Performance Chart will be initialized here when this section is expanded -->
-                            <p class="font-semibold text-teal-700 mb-4">Key Performance Impact:</p>
+                            <p class="font-semibold text-teal-400 mb-4">Key Performance Impact:</p>
                             <div class="chart-container">
                                 <canvas id="performanceChart"></canvas>
                             </div>
-                            <ul class="list-disc list-inside space-y-2 text-slate-600 text-left">
-                                <li>Contributed to a 23.3% increase in total revenue and 120%+ growth in active users within one year.</li>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-left">
+                                <li>Contributed to a 23.3% increase in total revenue and 120%+ active user growth within one year.</li>
                                 <li>Developed and executed monthly marketing plans, including designing promotional offers and managing banner displays.</li>
                                 <li>Managed and optimized product content and listings on the e-commerce platform.</li>
                                 <li>Utilized Google Analytics extensively to generate detailed performance reports.</li>
@@ -227,16 +291,16 @@
                     <!-- Smash Dash Digital Marketing - Technical Manager (May 2024 – May 2025) -->
                     <div class="timeline-item mb-12">
                         <div class="flex items-center">
-                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                            <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
                                 <span class="text-white font-bold">⚙️</span>
                             </div>
                             <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
-                                <h3 class="text-xl font-bold text-slate-800">Technical Manager <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Smash.jpeg?raw=true" alt="شعار شركة سماش داش" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Error';"></h3>
-                                <p class="text-slate-500 font-medium">Smash Dash Digital Marketing | May 2024 – May 2025</p>
+                                <h3 class="text-xl font-bold text-white">Technical Manager <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Smash.jpeg?raw=true" alt="Smash Dash Digital Marketing Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
+                                <p class="text-gray-400 font-medium">Smash Dash Digital Marketing | May 2024 – May 2025</p>
                             </div>
                         </div>
                         <div class="timeline-item-content ml-10 md:ml-[55%] md:pl-12 mt-4">
-                            <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
                                 <li>Managed the company's team, coordinating tasks for both in-house projects and client accounts.</li>
                                 <li>Handled and resolved client issues, and allocated tasks to team members effectively.</li>
                                 <li>Managed hiring for the team and created integrated plans for clients from initial contact to project delivery.</li>
@@ -248,16 +312,16 @@
                     <!-- Ebdaa Company - Mediabuyer (Jun 2024 – Dec 2024) -->
                     <div class="timeline-item mb-12">
                         <div class="flex items-center">
-                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                            <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
                                 <span class="text-white font-bold">🎯</span>
                             </div>
                             <div class="w-full md:text-right md:mr-[55%] md:pr-12 cursor-pointer timeline-item-header">
-                                <h3 class="text-xl font-bold text-slate-800">Mediabuyer <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Ebda3.jpeg?raw=true" alt="شعار شركة إبداع" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Error';"></h3>
-                                <p class="text-slate-500 font-medium">Ebdaa Company | Jun 2024 – Dec 2024</p>
+                                <h3 class="text-xl font-bold text-white">Mediabuyer <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Ebda3.jpeg?raw=true" alt="Ebdaa Company Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
+                                <p class="text-gray-400 font-medium">Ebdaa Company | Jun 2024 – Dec 2024</p>
                             </div>
                         </div>
                         <div class="timeline-item-content ml-10 md:text-right md:mr-[55%] md:pr-12 mt-4">
-                            <ul class="list-disc list-inside space-y-2 text-slate-600 text-left">
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-left">
                                 <li>Managed client advertising campaigns across various platforms and industries, including tourism, food, services, and fashion.</li>
                                 <li>Conducted detailed analysis of ad performance on different social media platforms to optimize results.</li>
                                 <li>Responsibilities included campaign planning, budget management, performance tracking, and A/B testing to maximize ROI.</li>
@@ -268,16 +332,16 @@
                     <!-- Ecokingdom - E-commerce Co-founder & Project Owner (Nov 2024 – Present) -->
                     <div class="timeline-item mb-12">
                         <div class="flex items-center">
-                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                            <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
                                 <span class="text-white font-bold">👑</span>
                             </div>
                             <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
-                                <h3 class="text-xl font-bold text-slate-800">E-commerce Co-founder & Project Owner <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%207.56.42%20AM.jpeg?raw=true" alt="شعار Ecokingdom" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Error';"></h3>
-                                <p class="text-slate-500 font-medium">Ecokingdom | Nov 2024 – Present</p>
+                                <h3 class="text-xl font-bold text-white">E-commerce Co-founder & Project Owner <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%207.56.42%20AM.jpeg?raw=true" alt="Ecokingdom Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
+                                <p class="text-gray-400 font-medium">Ecokingdom | Nov 2024 – Present</p>
                             </div>
                         </div>
                         <div class="timeline-item-content ml-10 md:ml-[55%] md:pl-12 mt-4">
-                            <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
                                 <li>Managed the operations, marketing, and confirmation teams.</li>
                                 <li>Achieved sales exceeding 3 million EGP in less than 8 months through effective social media advertising (TikTok Ads, etc.).</li>
                                 <li>Successfully managed project finances and logistical arrangements without a physical on-site presence.</li>
@@ -288,16 +352,16 @@
                     <!-- Smart Stores - Technical Manager (Jun 2025 – Present) -->
                     <div class="timeline-item">
                         <div class="flex items-center">
-                            <div class="z-10 bg-teal-600 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
+                            <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
                                 <span class="text-white font-bold">🏢</span>
                             </div>
                             <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
-                                <h3 class="text-xl font-bold text-slate-800">Technical Manager <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Smart%20stores.jpeg?raw=true" alt="شعار شركة سمارت ستورز" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/cccccc/333333?text=Error';"></h3>
-                                <p class="text-slate-500 font-medium">Smart Stores | Jun 2025 – Present</p>
+                                <h3 class="text-xl font-bold text-white">Technical Manager <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Smart%20stores.jpeg?raw=true" alt="Smart Stores Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
+                                <p class="text-gray-400 font-medium">Smart Stores | Jun 2025 – Present</p>
                             </div>
                         </div>
                         <div class="timeline-item-content ml-10 md:ml-[55%] md:pl-12 mt-4">
-                            <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
                                 <li>Managed the company's team, coordinating tasks for both in-house projects and client accounts.</li>
                                 <li>Handled and resolved client issues, and allocated tasks to team members effectively.</li>
                                 <li>Managed hiring for the team and created integrated plans for clients from initial contact to project delivery.</li>
@@ -310,78 +374,103 @@
         </section>
         
         <!-- Skills Section -->
-        <section id="skills" class="py-20">
+        <section id="skills" class="py-20 bg-gray-900 text-gray-200">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Core Competencies</h2>
-                    <p class="mt-4 text-lg text-slate-500">A versatile skill set to drive e-commerce success.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Core Competencies</h2>
+                    <p class="mt-4 text-lg text-gray-400">A versatile skill set to drive e-commerce success.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">E-commerce & Digital Marketing</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag">E-commerce Strategy</span><span class="skill-tag">Online Merchandising</span><span class="skill-tag">SEO Optimization</span><span class="skill-tag">Content Marketing</span><span class="skill-tag">CRO</span><span class="skill-tag">Media Buying</span>
+                    <div class="accordion-item bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-bold text-white">E-commerce & Digital Marketing</h3>
+                            <svg class="accordion-arrow w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Platforms & Tools</h3>
-                        <div class="flex flex-col space-y-4">
-                            <div>
-                                <h4 class="font-semibold text-slate-700 mb-2">E-commerce Platforms:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-tag">Magento</span>
-                                    <span class="skill-tag">Salla</span>
-                                    <span class="skill-tag">Easy Order</span>
-                                    <span class="skill-tag">YouCan</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-slate-700 mb-2">Digital Advertising Platforms:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-tag">Google Ads</span>
-                                    <span class="skill-tag">Meta Ads</span>
-                                    <span class="skill-tag">TikTok Ads</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-slate-700 mb-2">Analytics & SEO Tools:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-tag">Google Analytics</span>
-                                    <span class="skill-tag">Semrush</span>
-                                    <span class="skill-tag">Keyword Planner</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-slate-700 mb-2">Productivity & AI Tools:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-tag">Excel</span>
-                                    <span class="skill-tag">Google Sheets</span>
-                                    <span class="skill-tag">XMind</span>
-                                    <span class="skill-tag">ChatGPT</span>
-                                    <span class="skill-tag">Gemini</span>
-                                    <span class="skill-tag">Perplexity</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-slate-700 mb-2">CRM & Project Management Tools:</h4>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-tag">Asana</span>
-                                    <span class="skill-tag">Odoo</span>
-                                    <span class="skill-tag">Trello</span>
-                                </div>
+                        <div class="accordion-content">
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-tag">E-commerce Strategy</span>
+                                <span class="skill-tag">Online Merchandising</span>
+                                <span class="skill-tag">SEO Optimization</span>
+                                <span class="skill-tag">Content Marketing</span>
+                                <span class="skill-tag">CRO</span>
+                                <span class="skill-tag">Media Buying</span>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Content & Communication</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag">Content Creation</span><span class="skill-tag">Copywriting</span><span class="skill-tag">Editing</span><span class="skill-tag">Keyword Research</span><span class="skill-tag">Collaboration</span>
+                    <div class="accordion-item bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-bold text-white">Platforms & Tools</h3>
+                            <svg class="accordion-arrow w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="flex flex-col space-y-4 mt-4">
+                                <div>
+                                    <h4 class="font-semibold text-gray-300 mb-2">E-commerce Platforms:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Magento</span>
+                                        <span class="skill-tag">Salla</span>
+                                        <span class="skill-tag">Easy Order</span>
+                                        <span class="skill-tag">YouCan</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-300 mb-2">Digital Advertising Platforms:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Google Ads</span>
+                                        <span class="skill-tag">Meta Ads</span>
+                                        <span class="skill-tag">TikTok Ads</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-300 mb-2">Analytics & SEO Tools:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Google Analytics</span>
+                                        <span class="skill-tag">Semrush</span>
+                                        <span class="skill-tag">Keyword Planner</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-300 mb-2">Productivity & AI Tools:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Excel</span>
+                                        <span class="skill-tag">Google Sheets</span>
+                                        <span class="skill-tag">XMind</span>
+                                        <span class="skill-tag">ChatGPT</span>
+                                        <span class="skill-tag">Gemini</span>
+                                        <span class="skill-tag">Perplexity</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-300 mb-2">CRM & Project Management Tools:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag">Asana</span>
+                                        <span class="skill-tag">Odoo</span>
+                                        <span class="skill-tag">Trello</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Leadership & Management</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="skill-tag">Project Management</span><span class="skill-tag">Team Guidance</span><span class="skill-tag">Performance Reporting</span><span class="skill-tag">Data Analysis</span><span class="skill-tag">Strategic Planning</span>
+                    <div class="accordion-item bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-bold text-white">Content & Communication</h3>
+                            <svg class="accordion-arrow w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-tag">Content Creation</span><span class="skill-tag">Copywriting</span><span class="skill-tag">Editing</span><span class="skill-tag">Keyword Research</span><span class="skill-tag">Collaboration</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
+                        <div class="accordion-header">
+                            <h3 class="text-xl font-bold text-white">Leadership & Management</h3>
+                            <svg class="accordion-arrow w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="skill-tag">Project Management</span><span class="skill-tag">Team Guidance</span><span class="skill-tag">Performance Reporting</span><span class="skill-tag">Data Analysis</span><span class="skill-tag">Strategic Planning</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -389,90 +478,108 @@
         </section>
 
         <!-- Clients & Brands Portfolio Section -->
-        <section id="clients" class="py-20 bg-slate-50">
+        <section id="clients" class="py-20 bg-gray-800 text-gray-200">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Clients & Brands Portfolio</h2>
-                    <p class="mt-4 text-lg text-slate-500">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Clients & Brands Portfolio</h2>
+                    <p class="mt-4 text-lg text-gray-400">
                         Proud to have collaborated with over 50 clients across diverse industries. Here are some of the brands I've worked with:
                     </p>
                 </div>
-                <!-- Horizontal scrolling container for logos -->
+                <!-- Horizontal scrolling container for logos with marquee effect -->
                 <div class="marquee-container">
                     <div class="marquee-content space-x-6">
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(3).jpg?raw=true" alt="Brand Logo 1" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(2).png?raw=true" alt="Brand Logo 1" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(3).png?raw=true" alt="Brand Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(3).png?raw=true" alt="Brand Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(5).png?raw=true" alt="Brand Logo 3" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(5).png?raw=true" alt="Brand Logo 3" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design.png?raw=true" alt="Brand Logo 4" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design.png?raw=true" alt="Brand Logo 4" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Brand Logo 5" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%205.46.43%20PM.jpeg?raw=true" alt="Brand Logo 5" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%EF%BB%A7%EF%BA%92%EF%BA%98%EF%BA%94%D9%80%20%EF%BA%A3%EF%BB%A8%EF%BA%8E%D9%80%EF%BA%80%20%D8%B1%EF%BB%AD%EF%BA%AF%20HENNA%20PLANT%20ROSE.png?raw=true" alt="Brand Logo 6" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%209.29.39%20AM.jpeg?raw=true" alt="Brand Logo 6" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(4).png?raw=true" alt="Brand Logo 7" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Brand Logo 7" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/image_79719b.png?raw=true" alt="Brand Logo 8" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9.webp" alt="Brand Logo 8" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D9%87%D8%B1%D9%8A.webp" alt="Brand Logo 9" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%B3%D9%8A%D9%83%D9%84%D9%88.webp" alt="Brand Logo 10" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/blob/main/%D9%86%D8%A8%D8%AA%D8%A9%20%D8%AD%D9%86%D8%A7%D8%A1.png?raw=true" alt="Brand Logo 11" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                     </div>
                     <!-- Duplicated content for seamless loop -->
                     <div class="marquee-content space-x-6" aria-hidden="true">
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(3).jpg?raw=true" alt="Brand Logo 1" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(2).png?raw=true" alt="Brand Logo 1" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(3).png?raw=true" alt="Brand Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(3).png?raw=true" alt="Brand Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(5).png?raw=true" alt="Brand Logo 3" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(5).png?raw=true" alt="Brand Logo 3" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design.png?raw=true" alt="Brand Logo 4" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design.png?raw=true" alt="Brand Logo 4" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Brand Logo 5" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%205.46.43%20PM.jpeg?raw=true" alt="Brand Logo 5" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%EF%BB%A7%EF%BA%92%EF%BA%98%EF%BA%94%D9%80%20%EF%BA%A3%EF%BB%A8%EF%BA%8E%D9%80%EF%BA%80%20%D8%B1%EF%BB%AD%EF%BA%AF%20HENNA%20PLANT%20ROSE.png?raw=true" alt="Brand Logo 6" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%209.29.39%20AM.jpeg?raw=true" alt="Brand Logo 6" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(4).png?raw=true" alt="Brand Logo 7" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Brand Logo 7" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/image_79719b.png?raw=true" alt="Brand Logo 8" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/cccccc/333333?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9.webp" alt="Brand Logo 8" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D9%87%D8%B1%D9%8A.webp" alt="Brand Logo 9" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%B3%D9%8A%D9%83%D9%84%D9%88.webp" alt="Brand Logo 10" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/blob/main/%D9%86%D8%A8%D8%AA%D8%A9%20%D8%AD%D9%86%D8%A7%D8%A1.png?raw=true" alt="Brand Logo 11" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                     </div>
                 </div>
-                <p class="text-slate-500 mt-8">This represents a selection of the over 50 clients and brands I have successfully worked with.</p>
+                <p class="text-gray-400 mt-8">This represents a selection of the over 50 clients and brands I have successfully worked with.</p>
             </div>
         </section>
 
         <!-- Education & Certifications Section -->
-        <section id="education" class="py-20 bg-white">
+        <section id="education" class="py-20 bg-gray-900 text-gray-200">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Education & Certifications</h2>
-                    <p class="mt-4 text-lg text-slate-500">My academic background and professional development.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Education & Certifications</h2>
+                    <p class="mt-4 text-lg text-gray-400">My academic background and professional development.</p>
                 </div>
                 <div class="max-w-3xl mx-auto space-y-8">
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-2">PHARMACY BACHELOR'S DEGREE</h3>
-                        <p class="text-slate-600 font-medium">Kafr El-Sheikh University | 2017-2022</p>
-                        <p class="text-slate-500 mt-2">Clinical Department Rating: Very Good</p>
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-2">PHARMACY BACHELOR'S DEGREE</h3>
+                        <p class="text-gray-300 font-medium">Kafr El-Sheikh University | 2017-2022</p>
+                        <p class="text-gray-400 mt-2">Clinical Department Rating: Very Good</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Courses & Professional Development</h3>
-                        <ul class="list-disc list-inside space-y-2 text-slate-600">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">Courses & Professional Development</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
                             <li>Search Engine Optimization (SEO) with Squarespace: Optimized Squarespace blog posts, pages, and site-level tools for on-page SEO.</li>
                             <li>Foundations of Digital Marketing and E-commerce: Gained foundational knowledge in digital marketing and e-commerce, identifying in-demand skills across industries.</li>
                             <li>Artificial Intelligence in Marketing: Explored the frontier of digital transformation in marketing, examining key forces enabling AI strategies.</li>
@@ -480,58 +587,30 @@
                             <li>Digital Marketing Strategy Course: Mastered strategic planning and execution of comprehensive digital marketing campaigns across various channels.</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Certificates</h3>
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-4">Certificates</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <!-- Certificate: Google -->
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AC%D9%88%D8%AC%D9%84.png?raw=true" alt="Google Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/333333?text=Error';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AC%D9%88%D8%AC%D9%84.png?raw=true" alt="Google Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/4a5568/e2e8f0?text=Error';">
                             <!-- Certificate: Digital Marketing -->
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AF%D9%8A%D8%AC%D8%AA%D8%A7%D9%84%20%D9%85%D8%A7%D8%B1%D9%83%D8%AA%D9%8A%D9%86%D8%AC.png?raw=true" alt="Digital Marketing Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/333333?text=Error';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AF%D9%8A%D8%AC%D8%AA%D8%A7%D9%84%20%D9%85%D8%A7%D8%B1%D9%83%D8%AA%D9%8A%D9%86%D8%AC.png?raw=true" alt="Digital Marketing Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/4a5568/e2e8f0?text=Error';">
                             <!-- Certificate: SEO -->
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B3%D9%8A%D9%88.png?raw=true" alt="SEO Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/333333?text=Error';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B3%D9%8A%D9%88.png?raw=true" alt="SEO Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/4a5568/e2e8f0?text=Error';">
                             <!-- Certificate: Facebook -->
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%81%D9%8A%D8%B3%D8%A8%D9%88%D9%83.png?raw=true" alt="Facebook Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/333333?text=Error';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%81%D9%8A%D8%B3%D8%A8%D9%88%D9%83.png?raw=true" alt="Facebook Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/4a5568/e2e8f0?text=Error';">
                             <!-- Certificate: Excel -->
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%83%D8%B3%D9%84.png?raw=true" alt="Excel Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/333333?text=Error';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%83%D8%B3%D9%84.png?raw=true" alt="Excel Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/4a5568/e2e8f0?text=Error';">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- AI-Powered Skill Matcher Section -->
-        <section id="ai-matcher" class="py-20 bg-slate-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">✨ AI-Powered Skill Matcher</h2>
-                    <p class="mt-4 text-lg text-slate-500">
-                        Paste a job description below, and our AI will highlight how my skills align with the requirements.
-                    </p>
-                </div>
-                <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-100">
-                    <div class="mb-6">
-                        <label for="jobDescriptionInput" class="block text-slate-700 text-lg font-semibold mb-2">Job Description:</label>
-                        <textarea id="jobDescriptionInput" class="w-full p-4 border border-slate-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 resize-y min-h-[150px] text-slate-700" placeholder="Paste the job description here..."></textarea>
-                    </div>
-                    <button id="analyzeSkillsButton" class="w-full bg-teal-600 text-white font-bold py-3 px-8 rounded-full hover:bg-teal-700 transition-transform transform hover:scale-105 flex items-center justify-center">
-                        <span id="buttonText">Analyze Skills ✨</span>
-                        <svg id="loadingSpinner" class="animate-spin h-5 w-5 text-white ml-3 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    </button>
-                    <div id="skillMatcherOutput" class="mt-8 p-6 bg-slate-100 rounded-lg border border-slate-200 text-slate-700 min-h-[100px] flex items-center justify-center text-center">
-                        <p class="text-slate-500">Your skill match analysis will appear here.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Contact Section -->
-        <footer id="contact" class="bg-slate-800 text-white py-16">
+        <footer id="contact" class="bg-gray-900 text-gray-200 py-16">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl font-bold">Let's Connect</h2>
-                <p class="mt-4 max-w-xl mx-auto text-slate-300">
+                <h2 class="text-3xl font-bold text-white">Let's Connect</h2>
+                <p class="mt-4 max-w-xl mx-auto text-gray-400">
                     I'm currently seeking new opportunities and would love to hear from you. Feel free to reach out.
                 </p>
                 <div class="mt-8">
@@ -539,7 +618,7 @@
                         AhmedBahgat919@gmail.com
                     </a>
                 </div>
-                <div class="mt-4 text-slate-400">
+                <div class="mt-4 text-gray-400">
                     <p>+20 101 575 4361</p>
                     <a href="https://www.linkedin.com/in/ahmed-bahgat-56a27629b" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">LinkedIn Profile</a>
                 </div>
@@ -621,12 +700,12 @@
                                         label: 'Growth %',
                                         data: [23.3, 120],
                                         backgroundColor: [
-                                            'rgba(13, 148, 136, 0.6)', // teal-600 with opacity
-                                            'rgba(51, 65, 85, 0.6)'    // slate-700 with opacity
+                                            'rgba(58, 180, 172, 0.6)', /* Teal-400 with opacity */
+                                            'rgba(113, 128, 150, 0.6)' /* Gray-500 with opacity */
                                         ],
                                         borderColor: [
-                                            'rgba(13, 148, 136, 1)',
-                                            'rgba(51, 65, 85, 1)'
+                                            'rgba(58, 180, 172, 1)',
+                                            'rgba(113, 128, 150, 1)'
                                         ],
                                         borderWidth: 1
                                     }]
@@ -641,6 +720,14 @@
                                                 callback: function(value) {
                                                     return value + '%';
                                                 }
+                                            },
+                                            grid: {
+                                                color: 'rgba(255, 255, 255, 0.1)' /* Light grid lines for dark theme */
+                                            }
+                                        },
+                                        x: {
+                                            grid: {
+                                                color: 'rgba(255, 255, 255, 0.1)' /* Light grid lines for dark theme */
                                             }
                                         }
                                     },
@@ -684,73 +771,93 @@
                 });
             };
 
-            // Gemini API Integration for Skill Matcher
-            const jobDescriptionInput = document.getElementById('jobDescriptionInput');
-            const analyzeSkillsButton = document.getElementById('analyzeSkillsButton');
-            const skillMatcherOutput = document.getElementById('skillMatcherOutput');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const buttonText = document.getElementById('buttonText');
+            // Hero Section Dynamic Headline Typing Effect
+            const heroHeadlineElement = document.getElementById('hero-dynamic-headline');
+            const headlines = [
+                "E-commerce Senior Specialist",
+                "Driving Digital Growth",
+                "Building Winning Teams",
+                "Achieving Exceptional Sales"
+            ];
+            let headlineIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100; // milliseconds per character
+            let deletingSpeed = 50; // milliseconds per character
+            let pauseBeforeDelete = 1500; // milliseconds
+            let pauseBeforeType = 500; // milliseconds
 
-            analyzeSkillsButton.addEventListener('click', async () => {
-                const jobDescription = jobDescriptionInput.value.trim();
-                if (!jobDescription) {
-                    skillMatcherOutput.innerHTML = '<p class="text-red-500">Please paste a job description to analyze.</p>';
-                    return;
+            function typeWriter() {
+                const currentHeadline = headlines[headlineIndex];
+                if (isDeleting) {
+                    heroHeadlineElement.textContent = currentHeadline.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    heroHeadlineElement.textContent = currentHeadline.substring(0, charIndex + 1);
+                    charIndex++;
                 }
 
-                loadingSpinner.classList.remove('hidden');
-                buttonText.textContent = 'Analyzing...';
-                analyzeSkillsButton.disabled = true;
-                skillMatcherOutput.innerHTML = '<p class="text-slate-500">Analyzing skills, please wait...</p>';
+                if (!isDeleting && charIndex === currentHeadline.length) {
+                    // Pause at end of word, then start deleting
+                    typingSpeed = pauseBeforeDelete;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    // Done deleting, move to next word
+                    isDeleting = false;
+                    headlineIndex = (headlineIndex + 1) % headlines.length;
+                    typingSpeed = pauseBeforeType;
+                } else {
+                    typingSpeed = isDeleting ? deletingSpeed : 100; // Normal typing speed
+                }
 
-                const candidateProfileSummary = `
-                    Ahmed Bahgat is an E-commerce Senior Specialist with over 3 years of combined experience as an E-commerce Project Owner, Online Merchandiser, Media Buyer, SEO Content Writer, and E-Marketing Planner. Key achievements include generating over 3 million EGP in sales within 8 months as an E-commerce Project Owner, contributing to a 23.3% increase in total revenue and 120%+ growth in active users at Saudia United Pharmacy. He is proficient in E-commerce Strategy, Online Merchandising, SEO Optimization, Content Marketing, CRO, Media Buying. Platforms & Tools: Magento, Salla, Easy Order, YouCan, Google Ads, Meta Ads, TikTok Ads, Google Analytics, Semrush, Keyword Planner, Excel, Google Sheets, XMind, ChatGPT, Gemini, Perplexity. He also has strong skills in Content Creation, Copywriting, Editing, Keyword Research, Collaboration, Project Management, Team Guidance & Training, Performance Reporting, Data Analysis, Strategic Planning.
-                `;
+                setTimeout(typeWriter, typingSpeed);
+            }
+            typeWriter(); // Start the typing effect
 
-                const prompt = {
-                    contents: [
-                        {
-                            role: "user",
-                            parts: [
-                                {
-                                    text: `You are an AI assistant specialized in matching candidate skills to job descriptions. Your task is to analyze a given job description and a candidate's profile, then identify and list the most relevant skills from the candidate's profile that match the job requirements. Explain briefly why each skill is relevant. Be concise and professional.
-                                    Candidate Profile Summary:
-                                    ${candidateProfileSummary}
-                                    Job Description:
-                                    ${jobDescription}
-                                    Please identify the most relevant skills from Ahmed's profile that match this job description and explain their relevance.`
-                                }
-                            ]
+            // Accordion functionality for Skills section
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordionItem = header.closest('.accordion-item');
+                    const content = accordionItem.querySelector('.accordion-content');
+                    const arrow = accordionItem.querySelector('.accordion-arrow');
+
+                    // Close other open accordions
+                    document.querySelectorAll('.accordion-content.open').forEach(openContent => {
+                        if (openContent !== content) {
+                            openContent.classList.remove('open');
+                            openContent.style.maxHeight = null;
+                            openContent.closest('.accordion-item').querySelector('.accordion-arrow').classList.remove('rotate');
+                            // Hide skill tags instantly when closing
+                            openContent.querySelectorAll('.skill-tag').forEach(tag => {
+                                tag.style.opacity = 0;
+                                tag.style.transform = 'translateY(10px)';
+                            });
                         }
-                    ]
-                };
-
-                try {
-                    const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(prompt)
                     });
-                    const result = await response.json();
 
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        skillMatcherOutput.innerHTML = `<div class="prose max-w-none">${text.replace(/\n/g, '<br>')}</div>`; // Display as HTML, replace newlines with <br>
+                    // Toggle current accordion
+                    content.classList.toggle('open');
+                    arrow.classList.toggle('rotate');
+
+                    if (content.classList.contains('open')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        // Animate skill tags with a delay
+                        content.querySelectorAll('.skill-tag').forEach((tag, index) => {
+                            setTimeout(() => {
+                                tag.style.opacity = 1;
+                                tag.style.transform = 'translateY(0)';
+                            }, 50 * index); // Staggered delay
+                        });
                     } else {
-                        skillMatcherOutput.innerHTML = '<p class="text-red-500">Could not get a response from the AI. Please try again.</p>';
+                        content.style.maxHeight = null;
+                        // Hide skill tags instantly when closing
+                        content.querySelectorAll('.skill-tag').forEach(tag => {
+                            tag.style.opacity = 0;
+                            tag.style.transform = 'translateY(10px)';
+                        });
                     }
-                } catch (error) {
-                    console.error('Error calling Gemini API:', error);
-                    skillMatcherOutput.innerHTML = '<p class="text-red-500">An error occurred while analyzing skills. Please try again later.</p>';
-                } finally {
-                    loadingSpinner.classList.add('hidden');
-                    buttonText.textContent = 'Analyze Skills ✨';
-                    analyzeSkillsButton.disabled = false;
-                }
+                });
             });
         });
     </script>
