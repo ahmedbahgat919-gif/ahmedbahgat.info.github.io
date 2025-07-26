@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Professional Teal & Dark Slate -->
-    <!-- Application Structure Plan: The website is structured as a single-page portfolio, now with a dark theme. The navigation and content are entirely in English. The flow is: 1. Hero: Dynamic introduction with profile image. 2. About Me: Narrative summary of expertise. 3. Professional Journey: Interactive timeline of roles. 4. Core Competencies: Accordion-style collapsible skill sections with enhanced reveal animations. 5. Clients & Brands: Animated marquee of client logos. 6. Education & Certifications: Academic and professional development with certificate images in a grid layout. 7. Contact Me: Direct contact information. This architecture prioritizes visual engagement, clear information hierarchy, and direct presentation of Ahmed's profile. -->
-    <!-- Visualization & Content Choices: 1. Hero Section: Goal=Engage/Impress. Method=Dynamic typing headline (HTML/JS) with updated tagline and prominent profile picture. Justification=Creates an immediate "wow" factor and clearly communicates core value. 2. About Me: Goal=Inform. Method=Text block summarizing professional essence. Justification=Provides a concise overview. 3. Professional Journey: Goal=Explore. Method=Interactive timeline (HTML/CSS/JS) to make career history digestible. Interaction=Click to expand details. Justification=More engaging than a static list. 4. Performance Chart (within Journey): Goal=Quantify Impact. Method=Bar Chart (Chart.js) for revenue/user. Justification=Visualizes concrete results. 5. Skills: Goal=Organize/Explore. Method=Accordion-style collapsible sections (HTML/Tailwind/JS) for categorized skill tags, with individual skill tags animating in on reveal. Interaction=Click to expand/collapse. Justification=Improves readability and allows users to focus on specific skill categories, preventing information overload while adding visual flair. 6. Clients & Brands Portfolio: Goal=Validate Experience. Method=Continuously scrolling marquee of circular client logos (HTML/Tailwind/CSS animation). Justification=Visually engaging and dynamic way to present a large number of clients. 7. Education & Certifications: Goal=Inform/Showcase. Method=Grid layout of certificate images within styled cards (HTML/Tailwind). Justification=Provides a visually appealing and organized display of credentials, similar to the requested example. -->
+    <!-- Application Structure Plan: The website is structured as a single-page portfolio, now with a dark theme. The navigation and content are entirely in English. The flow is: 1. Hero: Dynamic introduction with profile image. 2. About Me: Narrative summary of expertise. 3. Professional Journey: Interactive timeline of roles. 4. Core Competencies: Accordion-style collapsible skill sections with enhanced reveal animations. 5. Clients & Brands: Animated marquee of client logos. 6. Education & Certifications: Academic and professional development with certificate images in a grid layout, optimized for mobile display. 7. Contact Me: Direct contact information. This architecture prioritizes visual engagement, clear information hierarchy, and direct presentation of Ahmed's profile. -->
+    <!-- Visualization & Content Choices: 1. Hero Section: Goal=Engage/Impress. Method=Dynamic typing headline (HTML/JS) with updated tagline and prominent profile picture. Justification=Creates an immediate "wow" factor and clearly communicates core value, optimized for mobile visibility. 2. About Me: Goal=Inform. Method=Text block summarizing professional essence. Justification=Provides a concise overview. 3. Professional Journey: Goal=Explore. Method=Interactive timeline (HTML/CSS/JS) to make career history digestible. Interaction=Click to expand details. Justification=More engaging than a static list, highlights career path, with text wrapping fixes for mobile and improved icon handling. 4. Performance Chart (within Journey): Goal=Quantify Impact. Method=Bar Chart (Chart.js) for revenue/user. Justification=Visualizes concrete results. 5. Skills: Goal=Organize/Explore. Method=Accordion-style collapsible sections (HTML/Tailwind/JS) for categorized skill tags, with individual skill tags animating in on reveal. Interaction=Click to expand/collapse. Justification=Improves readability and allows users to focus on specific skill categories. 6. Clients & Brands Portfolio: Goal=Validate Experience. Method=Continuously scrolling marquee of circular client logos (HTML/Tailwind/CSS animation). Justification=Visually engaging and dynamic way to present a large number of clients. 7. Education & Certifications: Goal=Inform/Showcase. Method=Responsive grid layout of certificate images within styled cards (HTML/Tailwind), ensuring full image visibility on all screen sizes. Justification=Provides a visually appealing and organized display of credentials. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -61,9 +61,11 @@
         }
         .certificate-image {
             width: 100%;
-            height: 180px; /* Fixed height for consistent image display */
-            object-fit: cover; /* Cover the area, cropping if necessary */
+            height: auto; /* Changed to auto for responsiveness */
+            max-height: 250px; /* Max height to prevent excessively tall images */
+            object-fit: contain; /* Changed to contain to show full image */
             border-bottom: 1px solid #4a5568; /* Subtle separator */
+            padding: 0.5rem; /* Added padding inside image container */
         }
         .client-logo-container {
             background-color: #2d3748; /* Darker background for logos */
@@ -151,6 +153,43 @@
         .accordion-arrow.rotate {
             transform: rotate(90deg);
         }
+
+        /* Responsive adjustments for Professional Journey text and Certificate section */
+        @media (max-width: 767px) {
+            .timeline-item-header {
+                flex-direction: column; /* Stack items vertically */
+                align-items: flex-start; /* Align text to the left */
+                text-align: left;
+            }
+            .timeline-item-header h3 {
+                font-size: 1.125rem; /* text-lg */
+                word-break: break-word; /* Allow words to break */
+                white-space: normal; /* Allow text to wrap */
+                margin-bottom: 0.25rem; /* Small margin below title */
+            }
+            .timeline-item-header img {
+                display: none; /* Hide logos in timeline header on very small screens */
+            }
+            .timeline-item-header .timeline-icon {
+                display: inline-block; /* Show the bullet/emoji */
+                margin-right: 0.5rem; /* Space between bullet and text */
+            }
+            .timeline-item-content {
+                padding-left: 0.5rem; /* Reduce padding for content on mobile */
+                padding-right: 0.5rem;
+            }
+            .hero-section-mobile-padding {
+                padding-top: 5rem; /* Adjust top padding for smaller screens */
+                padding-bottom: 5rem; /* Adjust bottom padding for smaller screens */
+            }
+            /* Certificate grid on mobile */
+            .certificate-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
+            }
+            .certificate-image {
+                max-height: 300px; /* Allow taller images on mobile for better readability */
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -188,11 +227,11 @@
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="py-20 md:py-32 bg-gray-900 min-h-screen flex items-center justify-center relative overflow-hidden">
+        <section id="hero" class="py-20 md:py-32 bg-gray-900 min-h-screen flex items-center justify-center relative overflow-hidden hero-section-mobile-padding">
             <div class="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900 opacity-75 z-0"></div>
             <div class="container mx-auto px-6 text-center z-10 relative">
                 <!-- Profile picture updated with the provided URL -->
-                <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/8941db60e2a9bac5c059c758c993ccb031d121a5/%D9%8A%D9%88%D9%85%20%D9%85%D9%8A%D9%84%D8%A7%D8%AF%D9%87.png" alt="Ahmed Bahgat's Profile Picture" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto mb-8 shadow-xl border-4 border-gray-700 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/4a5568/e2e8f0?text=Image+Error';">
+                <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%8A%D9%88%D9%85%20%D9%85%D9%8A%D9%84%D8%A7%D8%AF%D9%87.png?raw=true" alt="Ahmed Bahgat's Profile Picture" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto mb-8 shadow-xl border-4 border-gray-700 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/4a5568/e2e8f0?text=Image+Error';">
                 <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
                     <span id="hero-headline-prefix">Ahmed Bahgat - </span><span id="hero-dynamic-headline"></span>
                 </h1>
@@ -251,7 +290,7 @@
             </div>
         </section>
 
-        <!-- Professional Experience Section -->
+        <!-- Professional Journey Section -->
         <section id="experience" class="py-20 bg-gray-800 text-gray-200">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
@@ -266,10 +305,10 @@
                     <div class="timeline-item mb-12">
                          <div class="flex items-center">
                             <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
-                                <span class="text-white font-bold">🛒</span>
+                                <span class="text-white font-bold timeline-icon md:hidden">🛒</span>
                             </div>
                             <div class="w-full md:text-right md:mr-[55%] md:pr-12 cursor-pointer timeline-item-header">
-                                <h3 class="text-xl font-bold text-white">Ecommerce Specialist <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Mila%20serv.jpeg?raw=true" alt="Saudia United Pharmacy Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
+                                <h3 class="text-xl font-bold text-white">Ecommerce Specialist <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Mila%20serv.jpeg?raw=true" alt="Saudia United Pharmacy Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle hidden md:inline-block" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
                                 <p class="text-gray-400 font-medium">Saudia United Pharmacy | Jan 2024 – Present</p>
                             </div>
                         </div>
@@ -292,7 +331,7 @@
                     <div class="timeline-item mb-12">
                         <div class="flex items-center">
                             <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
-                                <span class="text-white font-bold">⚙️</span>
+                                <span class="text-white font-bold timeline-icon">⚙️</span>
                             </div>
                             <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
                                 <h3 class="text-xl font-bold text-white">Technical Manager <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Smash.jpeg?raw=true" alt="Smash Dash Digital Marketing Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
@@ -313,7 +352,7 @@
                     <div class="timeline-item mb-12">
                         <div class="flex items-center">
                             <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
-                                <span class="text-white font-bold">🎯</span>
+                                <span class="text-white font-bold timeline-icon">🎯</span>
                             </div>
                             <div class="w-full md:text-right md:mr-[55%] md:pr-12 cursor-pointer timeline-item-header">
                                 <h3 class="text-xl font-bold text-white">Mediabuyer <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Ebda3.jpeg?raw=true" alt="Ebdaa Company Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
@@ -333,7 +372,7 @@
                     <div class="timeline-item mb-12">
                         <div class="flex items-center">
                             <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
-                                <span class="text-white font-bold">👑</span>
+                                <span class="text-white font-bold timeline-icon">👑</span>
                             </div>
                             <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
                                 <h3 class="text-xl font-bold text-white">E-commerce Co-founder & Project Owner <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%207.56.42%20AM.jpeg?raw=true" alt="Ecokingdom Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
@@ -353,7 +392,7 @@
                     <div class="timeline-item">
                         <div class="flex items-center">
                             <div class="z-10 bg-teal-500 rounded-full h-8 w-8 flex items-center justify-center absolute left-4 -ml-4 md:left-1/2">
-                                <span class="text-white font-bold">🏢</span>
+                                <span class="text-white font-bold timeline-icon">🏢</span>
                             </div>
                             <div class="w-full md:ml-[55%] md:pl-12 cursor-pointer timeline-item-header">
                                 <h3 class="text-xl font-bold text-white">Technical Manager <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Smart%20stores.jpeg?raw=true" alt="Smart Stores Logo" class="h-8 w-8 rounded-full inline-block ml-2 align-middle" onerror="this.onerror=null;this.src='https://placehold.co/40x40/4a5568/e2e8f0?text=Error';"></h3>
@@ -490,73 +529,79 @@
                 <div class="marquee-container">
                     <div class="marquee-content space-x-6">
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(2).png?raw=true" alt="Brand Logo 1" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/BHT.png?raw=true" alt="BHT Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(3).png?raw=true" alt="Brand Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(5).png?raw=true" alt="Brand Logo 3" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A3%D9%86%D8%A7%20%D9%82%D8%AF%D9%87%D8%A7-Photoroom.png?raw=true" alt="Ana Qadha Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design.png?raw=true" alt="Brand Logo 4" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%84%D9%86%D9%88%D8%AC.png?raw=true" alt="Al Nouj Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%205.46.43%20PM.jpeg?raw=true" alt="Brand Logo 5" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%8A%D8%AC%D9%8A%D8%A8%D8%AA%20%D9%88%D8%A7%D8%B1%D9%84%D8%AF-Photoroom.png?raw=true" alt="Egypt World Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%209.29.39%20AM.jpeg?raw=true" alt="Brand Logo 6" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AC%D9%88%D9%87%D8%B1%D8%AA%D8%B4.png?raw=true" alt="Gawhartash Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Brand Logo 7" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B3%D9%85%D9%88.png?raw=true" alt="Rayat Al Samoo Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9.webp" alt="Brand Logo 8" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B3%D9%8A%D9%83%D9%84%D9%88.png?raw=true" alt="Cyclo Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D9%87%D8%B1%D9%8A.webp" alt="Brand Logo 9" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9-Photoroom.png?raw=true" alt="United Pharmacy Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%B3%D9%8A%D9%83%D9%84%D9%88.webp" alt="Brand Logo 10" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%83%D9%8A%D8%B1%D9%88%D8%A7%D9%8A.png?raw=true" alt="Cairo Way Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/blob/main/%D9%86%D8%A8%D8%AA%D8%A9%20%D8%AD%D9%86%D8%A7%D8%A1.png?raw=true" alt="Brand Logo 11" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/henna-plant-logo.png?raw=true" alt="Henna Plant Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%86%D9%8A%D8%B1%D9%81%D9%88%D9%86%D8%A7.jpeg?raw=true" alt="Nirvana Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                     </div>
                     <!-- Duplicated content for seamless loop -->
                     <div class="marquee-content space-x-6" aria-hidden="true">
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(2).png?raw=true" alt="Brand Logo 1" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/BHT.png?raw=true" alt="BHT Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(3).png?raw=true" alt="Brand Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Logo 2" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design%20(5).png?raw=true" alt="Brand Logo 3" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A3%D9%86%D8%A7%20%D9%82%D8%AF%D9%87%D8%A7-Photoroom.png?raw=true" alt="Ana Qadha Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/Untitled%20design.png?raw=true" alt="Brand Logo 4" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%84%D9%86%D9%88%D8%AC.png?raw=true" alt="Al Nouj Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%205.46.43%20PM.jpeg?raw=true" alt="Brand Logo 5" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%A7%D9%8A%D8%AC%D9%8A%D8%A8%D8%AA%20%D9%88%D8%A7%D8%B1%D9%84%D8%AF-Photoroom.png?raw=true" alt="Egypt World Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/WhatsApp%20Image%202025-07-26%20at%209.29.39%20AM.jpeg?raw=true" alt="Brand Logo 6" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AC%D9%88%D9%87%D8%B1%D8%AA%D8%B4.png?raw=true" alt="Gawhartash Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/logo%20(2).png?raw=true" alt="Brand Logo 7" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B1%D8%A7%D9%8A%D8%A9%20%D8%A7%D9%84%D8%B3%D9%85%D9%88.png?raw=true" alt="Rayat Al Samoo Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9.webp" alt="Brand Logo 8" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B3%D9%8A%D9%83%D9%84%D9%88.png?raw=true" alt="Cyclo Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%A7%D9%84%D9%85%D9%87%D8%B1%D9%8A.webp" alt="Brand Logo 9" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9-Photoroom.png?raw=true" alt="United Pharmacy Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/refs/heads/main/%D8%B3%D9%8A%D9%83%D9%84%D9%88.webp" alt="Brand Logo 10" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%83%D9%8A%D8%B1%D9%88%D8%A7%D9%8A.png?raw=true" alt="Cairo Way Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                         <div class="flex-shrink-0 client-logo-container">
-                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/blob/main/%D9%86%D8%A8%D8%AA%D8%A9%20%D8%AD%D9%86%D8%A7%D8%A1.png?raw=true" alt="Brand Logo 11" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/henna-plant-logo.png?raw=true" alt="Henna Plant Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
+                        </div>
+                        <div class="flex-shrink-0 client-logo-container">
+                            <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D9%86%D9%8A%D8%B1%D9%81%D9%88%D9%86%D8%A7.jpeg?raw=true" alt="Nirvana Logo" class="client-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x50/4a5568/e2e8f0?text=Logo';">
                         </div>
                     </div>
                 </div>
@@ -589,7 +634,7 @@
                     </div>
                     <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
                         <h3 class="text-xl font-bold text-white mb-4">Certificates</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 certificate-grid">
                             <!-- Certificate: Google -->
                             <img src="https://raw.githubusercontent.com/ahmedbahgat919-gif/ahmedbahgat.info.github.io/main/%D8%AC%D9%88%D8%AC%D9%84.png?raw=true" alt="Google Certificate" class="certificate-image" onerror="this.onerror=null;this.src='https://placehold.co/300x200/4a5568/e2e8f0?text=Error';">
                             <!-- Certificate: Digital Marketing -->
